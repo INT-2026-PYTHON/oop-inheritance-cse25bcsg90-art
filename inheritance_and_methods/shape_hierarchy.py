@@ -112,3 +112,32 @@ Explanation:
 =================================================
 
 """
+class Shape:
+    def __init__(self,n): self.name=n
+    def area(self): raise NotImplementedError
+    def perimeter(self): raise NotImplementedError
+    def describe(self): print(f"{self.name}: area={self.area()}, perimeter={self.perimeter()}")
+
+class Circle(Shape):
+    def __init__(self,r): super().__init__("Circle"); self.r=r
+    def area(self): return 3.14159*self.r*self.r
+    def perimeter(self): return 2*3.14159*self.r
+
+class Rectangle(Shape):
+    def __init__(self,l,w): super().__init__("Rectangle"); self.l=l; self.w=w
+    def area(self): return self.l*self.w
+    def perimeter(self): return 2*(self.l+self.w)
+
+class Triangle(Shape):
+    def __init__(self,a,b,c): super().__init__("Triangle"); self.a=a; self.b=b; self.c=c
+    def perimeter(self): return self.a+self.b+self.c
+    def area(self):
+        s=self.perimeter()/2
+        return (s*(s-self.a)*(s-self.b)*(s-self.c))**0.5
+
+try:
+    Shape("Base").describe()
+except NotImplementedError: print("Shape itself cannot compute area/perimeter")
+
+shapes=[Circle(5),Rectangle(4,6),Triangle(3,4,5)]
+for s in shapes: s.describe()
